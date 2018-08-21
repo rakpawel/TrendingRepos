@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 
 import com.pawelrak.trendingrepos.R
 import com.pawelrak.trendingrepos.databinding.FragmentRepositoryListBinding
@@ -46,7 +47,9 @@ class RepositoryListFragment : Fragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoryListViewModel::class.java)
         binding.viewmodel = viewModel
         val adapter = RepositoriesAdapter { repo ->
-                Log.d("event", "repo clicked")
+            navController().navigate(
+                    RepositoryListFragmentDirections.showRepoDetails(repo)
+            )
         }
         this.adapter = adapter
         binding.repositoryList.adapter = adapter
@@ -69,4 +72,5 @@ class RepositoryListFragment : Fragment(), Injectable {
         viewModel.fetchRepos()
     }
 
+    fun navController() = findNavController()
 }
