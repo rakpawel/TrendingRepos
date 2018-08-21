@@ -19,6 +19,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField 'String', 'BASE_URL', '"https://api.github.com/"'
+        }
     }
 
     dataBinding {

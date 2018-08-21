@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import com.pawelrak.trendingrepos.R
 import com.pawelrak.trendingrepos.databinding.FragmentRepositoryListBinding
 import com.pawelrak.trendingrepos.di.Injectable
+import com.pawelrak.trendingrepos.extension.observe
 import com.pawelrak.trendingrepos.util.autoCleared
 import javax.inject.Inject
 
@@ -49,6 +50,23 @@ class RepositoryListFragment : Fragment(), Injectable {
         }
         this.adapter = adapter
         binding.repositoryList.adapter = adapter
+        setUpViewModelStateObservers()
+        initList()
+    }
+
+    private fun setUpViewModelStateObservers() {
+        observe(viewModel.getState()) { onStateChanged(it) }
+    }
+
+    private fun onStateChanged(state: RepositoryListViewModel.State) = when (state) {
+        is RepositoryListViewModel.State.ReposLoaded -> adapter.submitList(state.data)
+        RepositoryListViewModel.State.ShowLoading -> Log.d("event", "repos loading")
+        RepositoryListViewModel.State.ShowContent -> Log.d("event", "repos show")
+        RepositoryListViewModel.State.ShowError -> Log.d("event", "repos loading error")
+    }
+
+    private fun initList() {
+        viewModel.fetchRepos()
     }
 
 }
