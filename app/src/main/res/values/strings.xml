@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TrendingRepos</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="repo_name">Repository name</string>
+    <string name="repo_details">Repository details</string>
+    <string name="repo_language">Language: %s</string>
+    <string name="repo_watchers">Watchers: %d</string>
 </resources>
