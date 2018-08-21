@@ -8,7 +8,7 @@ import com.pawelrak.trendingrepos.usecase.Result
 import com.pawelrak.trendingrepos.util.ObservableViewModel
 import javax.inject.Inject
 
-class RepositoryListViewModel @Inject constructor(private val useCase: LoadTrendingReposUseCase) :  ObservableViewModel()  {
+class RepositoryListViewModel @Inject constructor(private val useCase: LoadTrendingReposUseCase) : ObservableViewModel() {
 
     val state: MediatorLiveData<State> = MediatorLiveData()
 

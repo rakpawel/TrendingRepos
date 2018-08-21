@@ -1,5 +1,6 @@
 package com.pawelrak.trendingrepos.usecase
 
+import com.pawelrak.trendingrepos.api.model.ReposResponse
 import com.pawelrak.trendingrepos.data.model.GithubRepository
 import com.pawelrak.trendingrepos.data.repository.RepoRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,15 +12,15 @@ class LoadTrendingReposUseCase
         BaseUseCase<Result<List<GithubRepository>>>() {
 
     fun execute() {
-        reposRepository.getTrendingRepos()
+        reposRepository.searchRepos("topic:android", "stars", "desc")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(::success, ::error)
                 .track()
     }
 
-    private fun success(repos: List<GithubRepository>) {
-        liveData.value = Result.Success(repos)
+    private fun success(repos: ReposResponse) {
+        liveData.value = Result.Success(repos.items)
     }
 
     private fun error(throwable: Throwable) {
