@@ -16,7 +16,7 @@
         tools:context=".ui.main.DashboardFragment">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/articles_list"
+            android:id="@+id/repository_list"
             app:layoutManager="LinearLayoutManager"
             android:layout_width="0dp"
             android:layout_height="0dp"

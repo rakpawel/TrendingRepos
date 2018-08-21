@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class RepositoryListFragment : Fragment(), Injectable {
 
     var binding by autoCleared<FragmentRepositoryListBinding>()
 
+    private var adapter by autoCleared<RepositoriesAdapter>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,6 +44,11 @@ class RepositoryListFragment : Fragment(), Injectable {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RepositoryListViewModel::class.java)
         binding.viewmodel = viewModel
+        val adapter = RepositoriesAdapter { repo ->
+                Log.d("event", "repo clicked")
+        }
+        this.adapter = adapter
+        binding.repositoryList.adapter = adapter
     }
 
 }
