@@ -54,7 +54,6 @@ class RepositoryListFragment : Fragment(), Injectable {
         this.adapter = adapter
         binding.repositoryList.adapter = adapter
         setUpViewModelStateObservers()
-        initList()
     }
 
     private fun setUpViewModelStateObservers() {
@@ -63,13 +62,10 @@ class RepositoryListFragment : Fragment(), Injectable {
 
     private fun onStateChanged(state: RepositoryListViewModel.State) = when (state) {
         is RepositoryListViewModel.State.ReposLoaded -> adapter.submitList(state.data)
-        RepositoryListViewModel.State.ShowLoading -> Log.d("event", "repos loading")
-        RepositoryListViewModel.State.ShowContent -> Log.d("event", "repos show")
-        RepositoryListViewModel.State.ShowError -> Log.d("event", "repos loading error")
-    }
-
-    private fun initList() {
-        viewModel.fetchRepos()
+        RepositoryListViewModel.State.ShowLoading -> Log.d("loading event", "repos loading")
+        RepositoryListViewModel.State.ShowContent -> Log.d("loading event", "repos show")
+        RepositoryListViewModel.State.ShowError -> Log.d("loading event", "repos loading error")
+        RepositoryListViewModel.State.EmptyData -> Log.d("loading event", "repos empty data")
     }
 
     fun navController() = findNavController()

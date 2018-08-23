@@ -1,4 +1,4 @@
-package com.pawelrak.trendingrepos.usecase
+package com.pawelrak.trendingrepos.usecase.common
 
 sealed class Result<T> {
     data class Progress<T>(var loading: Boolean) : Result<T>()

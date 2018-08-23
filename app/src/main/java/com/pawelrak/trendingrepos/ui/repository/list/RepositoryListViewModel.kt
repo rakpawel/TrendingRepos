@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import com.pawelrak.trendingrepos.data.model.GithubRepository
 import com.pawelrak.trendingrepos.usecase.LoadTrendingReposUseCase
-import com.pawelrak.trendingrepos.usecase.Result
+import com.pawelrak.trendingrepos.usecase.common.Result
 import com.pawelrak.trendingrepos.util.ObservableViewModel
 import javax.inject.Inject
 
@@ -14,6 +14,7 @@ class RepositoryListViewModel @Inject constructor(private val useCase: LoadTrend
 
     init {
         state.addSource(useCase.getLiveData(), ::onLoadRepos)
+        fetchRepos()
     }
 
     override fun onCleared() {
@@ -28,7 +29,10 @@ class RepositoryListViewModel @Inject constructor(private val useCase: LoadTrend
     private fun onLoadRepos(result: Result<List<GithubRepository>>?) {
         when (result) {
             is Result.Success -> {
-                state.value = State.ReposLoaded(result.data)
+                if (result.data.isNotEmpty())
+                    state.value = State.ReposLoaded(result.data)
+                else
+                    state.value = State.EmptyData
             }
             is Result.Failure -> state.value = State.ShowError
         }
@@ -36,6 +40,7 @@ class RepositoryListViewModel @Inject constructor(private val useCase: LoadTrend
 
     sealed class State {
         data class ReposLoaded(val data: List<GithubRepository>) : State()
+        object EmptyData : State()
         object ShowLoading : State()
         object ShowContent : State()
         object ShowError : State()
