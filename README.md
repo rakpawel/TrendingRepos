@@ -1,4 +1,4 @@
-# Trendind Repos
+# Trending Repos
 
 This is a sample Android application, which allows to see the most trending repositories for Android topic.
 
